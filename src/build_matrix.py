@@ -39,7 +39,7 @@ matrix = votes.pivot_table(index="country", columns="rcid", values="vote_norm", 
 print("Matrix shape (countries x rcid):", matrix.shape)
 
 # Save the matrix
-matrix.to_csv(data_dir / "country_by_rcid_matrix.csv")
+matrix.to_csv(data_dir / "csvs" / "country_by_rcid_matrix.csv")
 print("Saved country_by_rcid_matrix.csv")
 
 
@@ -59,5 +59,5 @@ votes["decade"] = (votes["year"] // 10) * 10
 # Build one matrix per decade
 for decade, df_decade in votes.groupby("decade"):
     matrix_decade = df_decade.pivot_table(index="country", columns="rcid", values="vote_norm", aggfunc="first").fillna(0).astype(int)
-    matrix_decade.to_csv(data_dir / f"country_by_rcid_{decade}.csv")
+    matrix_decade.to_csv(data_dir / "csvs" / f"country_by_rcid_{decade}.csv")
     print(f"Saved matrix for decade {decade}")

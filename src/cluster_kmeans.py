@@ -23,7 +23,7 @@ data_dir = Path("data")
 
 # Load the main matrix: rows are countries, columns are roll-call IDs (votes)
 # index_col=0 means the first column (country names) is used as the index
-matrix = pd.read_csv(data_dir / "country_by_rcid_matrix.csv", index_col=0)
+matrix = pd.read_csv(data_dir / "csvs" / "country_by_rcid_matrix.csv", index_col=0)
 
 # --- Step 1: Filter Data ---
 # We want to remove columns (votes) where almost everyone abstained or was missing.
@@ -72,7 +72,7 @@ labels = km.fit_predict(X_norm) # Get final cluster labels for all countries
 # Save the results to a CSV file
 countries = matrix_f.index
 df_clusters = pd.DataFrame({"country": countries, "cluster": labels})
-df_clusters.to_csv(data_dir / "country_clusters_kmeans.csv", index=False)
+df_clusters.to_csv(data_dir / "csvs" / "country_clusters_kmeans.csv", index=False)
 print("Saved country_clusters_kmeans.csv")
 
 # --- Step 5: Visualization with PCA ---
@@ -99,7 +99,7 @@ plt.ylabel("PC2") # PC2: Second Principal Component (y-axis)
 plt.title(f"KMeans clusters (k={final_k}) with PCA projection")
 plt.legend() # Show legend for clusters
 plt.tight_layout() # Adjust padding between elements
-plt.savefig(data_dir / "clusters_pca_plot.png", dpi=150)
+plt.savefig(data_dir / "graphs" / "clusters_pca_plot.png", dpi=150)
 print("Saved clusters_pca_plot.png")
 
 # NB: The PCA coordinates values are not unit like "% agreement", they are just projections for visualization. 
@@ -138,7 +138,7 @@ def run_kmeans_pca_for_matrix(matrix_decade: pd.DataFrame, tag: str, k: int) -> 
     # Save cluster results
     countries = matrix_f.index
     df_clusters = pd.DataFrame({"country": countries, "cluster": labels})
-    out_clusters = data_dir / f"country_clusters_kmeans_{tag}.csv"
+    out_clusters = data_dir / "csvs" / f"country_clusters_kmeans_{tag}.csv"
     df_clusters.to_csv(out_clusters, index=False)
     print(f"[{tag}] saved {out_clusters.name}")
 
@@ -166,14 +166,14 @@ def run_kmeans_pca_for_matrix(matrix_decade: pd.DataFrame, tag: str, k: int) -> 
     plt.tight_layout()
 
     # Save plot
-    out_plot = data_dir / f"clusters_pca_plot_{tag}.png"
+    out_plot = data_dir / "graphs" / f"clusters_pca_plot_{tag}.png"
     plt.savefig(out_plot)
     plt.close()
     print(f"[{tag}] saved {out_plot.name}")
 
 
 # Loop through all decade files and run the analysis
-for p in sorted(data_dir.glob("country_by_rcid_*.csv")):
+for p in sorted((data_dir / "csvs").glob("country_by_rcid_*.csv")):
     if p.name == "country_by_rcid_matrix.csv":
         continue # Skip the main matrix file
 

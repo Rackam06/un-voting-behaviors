@@ -1,5 +1,5 @@
 country,cluster
-Afghanistan,0
+Afghanistan,1
 Argentina,0
 Australia,0
 Belarus,1
@@ -15,39 +15,39 @@ Czechoslovakia,1
 Denmark,0
 Dominican Republic,0
 Ecuador,0
-Egypt,0
+Egypt,1
 El Salvador,0
-Ethiopia,0
+Ethiopia,1
 France,0
 Greece,0
-Guatemala,0
-Haiti,0
+Guatemala,1
+Haiti,1
 Honduras,0
 Iceland,0
-India,0
-Iran,0
-Iraq,0
-Israel,0
-Lebanon,0
-Liberia,0
+India,1
+Iran,1
+Iraq,1
+Israel,1
+Lebanon,1
+Liberia,1
 Luxembourg,0
 Mexico,0
-Myanmar (Burma),0
+Myanmar (Burma),1
 Netherlands,0
 New Zealand,0
 Nicaragua,0
 Norway,0
-Pakistan,0
+Pakistan,1
 Panama,0
 Paraguay,0
 Peru,0
-Philippines,0
+Philippines,1
 Poland,1
 Russia,1
-Saudi Arabia,0
+Saudi Arabia,1
 South Africa,0
 Sweden,0
-Syria,0
+Syria,1
 Taiwan,0
 Thailand,0
 Turkey,0
@@ -56,5 +56,5 @@ United Kingdom,0
 United States,0
 Uruguay,0
 Venezuela,0
-Yemen Arab Republic,0
+Yemen Arab Republic,1
 Yugoslavia,1

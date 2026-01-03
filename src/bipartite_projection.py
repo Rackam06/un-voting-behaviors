@@ -98,7 +98,7 @@ nx.draw_networkx_edge_labels(H, pos, edge_labels=edge_labels, font_size=8)
 plt.title("Shared 'Yes' Votes Among Key Countries")
 plt.axis("off") # Turn off the x/y axis numbers
 plt.tight_layout() # Adjust padding between elements
-plt.savefig(data_dir / "important_countries_graph.png")
+plt.savefig(data_dir / "graphs" / "important_countries_graph.png")
 print("Saved important_countries_graph.png")
 
 
@@ -121,7 +121,7 @@ for c1 in valid_countries:
 
 # Create a DataFrame for the heatmap
 df_matrix = pd.DataFrame(matrix_data, index=valid_countries, columns=valid_countries)
-df_matrix.to_csv(data_dir / "important_countries_matrix.csv")
+df_matrix.to_csv(data_dir / "csvs" / "important_countries_matrix.csv")
 print("Saved important_countries_matrix.csv")
 
 # Plot the heatmap using seaborn
@@ -129,7 +129,7 @@ plt.figure(figsize=(10, 8))
 sns.heatmap(df_matrix, annot=True, fmt="d", cmap="YlGnBu") # annot=True shows numbers, fmt="d" means integer, cmap is just for colors
 plt.title("Number of Shared 'Yes' Votes")
 plt.tight_layout()
-plt.savefig(data_dir / "important_countries_heatmap.png")
+plt.savefig(data_dir / "graphs" / "important_countries_heatmap.png")
 print("Saved important_countries_heatmap.png")
 
 
@@ -161,5 +161,35 @@ for country in valid_countries:
 
 # Save the top allies to a CSV file
 df_allies = pd.DataFrame(top_allies_data)
-df_allies.to_csv(data_dir / "important_countries_top_allies.csv", index=False)
+df_allies.to_csv(data_dir / "csvs" / "important_countries_top_allies.csv", index=False)
 print("Saved important_countries_top_allies.csv")
+
+# --- Step 9: Simple Top-Allies Plot (one bar per country, color = strength) ---
+if not df_allies.empty:
+    # Lists: country name, top ally name, and shared 'yes' vote count with that ally
+    countries = df_allies["Country"].astype(str).tolist()
+    top_allies = df_allies.get("Ally_1", pd.Series([""] * len(df_allies))).fillna("").astype(str).tolist()
+    votes = df_allies.get("Votes_1", pd.Series([0] * len(df_allies))).fillna(0).astype(float).tolist()
+
+    # Normalize for colormap (avoid division by zero)
+    max_v = max(votes) if votes and max(votes) > 0 else 1.0
+    colors = [plt.cm.viridis(v / max_v) for v in votes] # color = strength
+
+    # Figure size adapts to number of countries (so labels stay readable)
+    plt.figure(figsize=(8, max(4, len(countries) * 0.4)))
+    y = list(range(len(countries)))
+    labels = [f"{c} → {a}" if a else c for c, a in zip(countries, top_allies)] # meaning "Country → Top Ally" or just country if no ally
+
+    # Horizontal bars: length = number of shared 'yes' votes, color = strength
+    plt.barh(y, votes, color=colors) # make a horizontal bar plot
+    plt.yticks(y, labels, fontsize=9)
+    plt.xlabel("Shared 'Yes' votes (top ally)")
+    plt.title("Top ally per important country (color = strength)")
+    plt.gca().invert_yaxis() # Invert y so first country is on top
+    for i, val in enumerate(votes):
+        plt.text(val + max_v * 0.01, i, str(int(val)), va="center", fontsize=8) # add text labels to bars ; "val + max_v * 0.01, i, str(int(val))" is the position and text (0.01 add margin to the right)
+    plt.tight_layout()
+    plt.savefig(data_dir / "graphs" / "important_countries_top_allies_simple.png", dpi=200)
+    print("Saved important_countries_top_allies_simple.png")
+else:
+    print("df_allies is empty")

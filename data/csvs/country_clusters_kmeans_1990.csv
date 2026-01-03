@@ -5,8 +5,8 @@ Algeria,1
 Andorra,0
 Angola,1
 Antigua & Barbuda,1
-Argentina,1
-Armenia,1
+Argentina,0
+Armenia,0
 Australia,0
 Austria,0
 Azerbaijan,1
@@ -42,8 +42,9 @@ Congo - Kinshasa,1
 Costa Rica,1
 Croatia,0
 Cuba,1
-Cyprus,0
+Cyprus,1
 Czechia,0
+Czechoslovakia,0
 Côte d’Ivoire,1
 Denmark,0
 Djibouti,1
@@ -57,6 +58,7 @@ Eritrea,1
 Estonia,0
 Eswatini,1
 Ethiopia,1
+Federal Republic of Germany,0
 Fiji,1
 Finland,0
 France,0
@@ -85,11 +87,10 @@ Italy,0
 Jamaica,1
 Japan,0
 Jordan,1
-Kazakhstan,1
+Kazakhstan,0
 Kenya,1
-Kiribati,1
 Kuwait,1
-Kyrgyzstan,1
+Kyrgyzstan,0
 Laos,1
 Latvia,0
 Lebanon,1
@@ -113,12 +114,10 @@ Micronesia (Federated States of),0
 Moldova,0
 Monaco,0
 Mongolia,1
-Montenegro,0
 Morocco,1
 Mozambique,1
 Myanmar (Burma),1
 Namibia,1
-Nauru,1
 Nepal,1
 Netherlands,0
 New Zealand,0
@@ -140,7 +139,7 @@ Poland,0
 Portugal,0
 Qatar,1
 Romania,0
-Russia,1
+Russia,0
 Rwanda,1
 Samoa,1
 San Marino,0
@@ -155,7 +154,6 @@ Solomon Islands,1
 Somalia,1
 South Africa,1
 South Korea,0
-South Sudan,1
 Spain,0
 Sri Lanka,1
 St. Kitts & Nevis,1
@@ -164,31 +162,28 @@ St. Vincent & Grenadines,1
 Sudan,1
 Suriname,1
 Sweden,0
-Switzerland,0
 Syria,1
 São Tomé & Príncipe,1
-Tajikistan,1
+Tajikistan,0
 Tanzania,1
 Thailand,1
-Timor-Leste,1
 Togo,1
-Tonga,1
 Trinidad & Tobago,1
 Tunisia,1
 Turkey,0
 Turkmenistan,1
-Tuvalu,1
 Uganda,1
-Ukraine,0
+Ukraine,1
 United Arab Emirates,1
 United Kingdom,0
 United States,0
 Uruguay,1
-Uzbekistan,1
+Uzbekistan,0
 Vanuatu,1
 Venezuela,1
 Vietnam,1
 Yemen,1
-Yugoslavia,0
+Yemen Arab Republic,1
+Yugoslavia,1
 Zambia,1
 Zimbabwe,1
