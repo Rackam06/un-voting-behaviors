@@ -46,18 +46,19 @@ print("Saved country_by_rcid_matrix.csv")
 # ---- Time evolution (by decade) ----
 
 # Parse dates
-roll_calls["date"] = pd.to_datetime(roll_calls["date"], errors="coerce")
-roll_calls["year"] = roll_calls["date"].dt.year
+roll_calls["date"] = pd.to_datetime(roll_calls["date"], errors="coerce") # "coerce" means invalid parsing will be set as NaT
+roll_calls["year"] = roll_calls["date"].dt.year # Extract year from date (2000-12-31 -> 2000)
 
 # Merge year into votes
-votes = votes.merge(roll_calls[["rcid", "year"]], on="rcid", how="left")
+votes = votes.merge(roll_calls[["rcid", "year"]], on="rcid", how="left") # left: use only keys from left frame, similar to a SQL left outer join; preserve key order
 
-votes = votes.dropna(subset=["year"])
-votes["year"] = votes["year"].astype(int)
-votes["decade"] = (votes["year"] // 10) * 10
+votes = votes.dropna(subset=["year"]) # Drop rows where year is NaN
+votes["year"] = votes["year"].astype(int) # Convert year to int
+votes["decade"] = (votes["year"] // 10) * 10 # Create decade column
 
 # Build one matrix per decade
 for decade, df_decade in votes.groupby("decade"):
+    # Create matrix for this decade
     matrix_decade = df_decade.pivot_table(index="country", columns="rcid", values="vote_norm", aggfunc="first").fillna(0).astype(int)
     matrix_decade.to_csv(data_dir / "csvs" / f"country_by_rcid_{decade}.csv")
     print(f"Saved matrix for decade {decade}")

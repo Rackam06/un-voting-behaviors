@@ -26,8 +26,8 @@ df_yes = df[df["vote"] == "yes"]
 B = nx.Graph()
 
 # Get unique lists of countries and resolutions
-countries = df_yes["country"].unique()
-resolutions = df_yes["rcid"].unique()
+countries = df_yes["country"].unique() # it is a list of all countries that voted 'yes'
+resolutions = df_yes["rcid"].unique() # it is a list of all resolutions that received at least one 'yes' vote
 
 # Add nodes to the graph, specifying which set they belong to (bipartite=0 or 1)
 B.add_nodes_from(countries, bipartite=0) # Set 0: Countries
@@ -75,13 +75,13 @@ nx.draw_networkx_nodes(H, pos, node_size=1000, node_color='lightblue')
 
 # Draw the edges (connections)
 # We want thicker lines for stronger alliances (higher weight).
-weights = [H[u][v]['weight'] for u, v in H.edges()]
+weights = [H[u][v]['weight'] for u, v in H.edges()] # Get weights of each edge between countries
 
 # Normalize weights to calculate width (so lines aren't too thick or thin)
 if weights:
     max_w = max(weights)
     # Width is proportional to weight: (5 * weight / max_weight)
-    widths = [5 * w / max_w for w in weights]
+    widths = [5 * w / max_w for w in weights] # scale factor of 5 for visibility
 else:
     widths = 1
 
@@ -146,7 +146,7 @@ for country in valid_countries:
         neighbors.append((neighbor, data['weight']))
     
     # Sort the list of neighbors by weight (highest first)
-    neighbors.sort(key=lambda x: x[1], reverse=True)
+    neighbors.sort(key=lambda x: x[1], reverse=True) # key=lambda x: x[1] means we sort by the second item in the tuple (the weight)
     
     # Take the top 10 allies
     top_10 = neighbors[:10]
@@ -168,28 +168,28 @@ print("Saved important_countries_top_allies.csv")
 if not df_allies.empty:
     # Lists: country name, top ally name, and shared 'yes' vote count with that ally
     countries = df_allies["Country"].astype(str).tolist()
-    top_allies = df_allies.get("Ally_1", pd.Series([""] * len(df_allies))).fillna("").astype(str).tolist()
-    votes = df_allies.get("Votes_1", pd.Series([0] * len(df_allies))).fillna(0).astype(float).tolist()
+    top_allies = df_allies.get("Ally_1", pd.Series([""] * len(df_allies))).fillna("").astype(str).tolist() # pd.series(...).fillna("") ensures no NaN values
+    votes = df_allies.get("Votes_1", pd.Series([0] * len(df_allies))).fillna(0).astype(float).tolist() # pd.series(...).fillna(0) ensures no NaN values
 
     # Normalize for colormap (avoid division by zero)
     max_v = max(votes) if votes and max(votes) > 0 else 1.0
     colors = [plt.cm.viridis(v / max_v) for v in votes] # color = strength
 
     # Figure size adapts to number of countries (so labels stay readable)
-    plt.figure(figsize=(8, max(4, len(countries) * 0.4)))
-    y = list(range(len(countries)))
+    plt.figure(figsize=(8, max(4, len(countries) * 0.4))) # width fixed, height depends on number of countries
+    y = list(range(len(countries))) # y positions for each bar
     labels = [f"{c} → {a}" if a else c for c, a in zip(countries, top_allies)] # meaning "Country → Top Ally" or just country if no ally
 
     # Horizontal bars: length = number of shared 'yes' votes, color = strength
     plt.barh(y, votes, color=colors) # make a horizontal bar plot
-    plt.yticks(y, labels, fontsize=9)
+    plt.yticks(y, labels, fontsize=9) # yticks are the country labels on the y axis
     plt.xlabel("Shared 'Yes' votes (top ally)")
     plt.title("Top ally per important country (color = strength)")
     plt.gca().invert_yaxis() # Invert y so first country is on top
     for i, val in enumerate(votes):
         plt.text(val + max_v * 0.01, i, str(int(val)), va="center", fontsize=8) # add text labels to bars ; "val + max_v * 0.01, i, str(int(val))" is the position and text (0.01 add margin to the right)
     plt.tight_layout()
-    plt.savefig(data_dir / "graphs" / "important_countries_top_allies_simple.png", dpi=200)
+    plt.savefig(data_dir / "graphs" / "important_countries_top_allies_simple.png", dpi=200) # dpi is for better quality (resolution in dots per inch)
     print("Saved important_countries_top_allies_simple.png")
 else:
     print("df_allies is empty")

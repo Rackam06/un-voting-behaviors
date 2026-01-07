@@ -41,6 +41,7 @@ X = matrix_f.values  # rows = countries, cols = votes (values are -1, 0, 1)
 # We normalize each country's vector to have a length of 1 (unit norm).
 # This ensures that countries with more votes don't dominate just because they voted more often.
 # It focuses on the direction of voting (pattern) rather than the magnitude.
+# It makes them all the same "strength" even if they have different numbers of total votes, but their vector will still have the same direction.
 row_norms = np.linalg.norm(X, axis=1, keepdims=True)
 row_norms[row_norms == 0] = 1 # Avoid division by zero if a country has all 0
 X_norm = X / row_norms
